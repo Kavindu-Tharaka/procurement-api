@@ -7,7 +7,7 @@ const cors = require('cors');
 const resourcePrefix = '/api/v1';
 
 // Importing routes from the routes folder
-const tagRoutes = require('./routes/tagRoutes'); //sample
+const tagRoutes = require('./routes/sampleRoutes'); //sample
 
 // Creating a Express application
 const app = express();
