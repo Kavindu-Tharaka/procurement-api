@@ -8,6 +8,8 @@ const resourcePrefix = '/api/v1';
 
 // Importing routes from the routes folder
 const tagRoutes = require('./routes/sampleRoutes'); //sample
+const orderRoute = require('./routes/orderRoute');
+
 
 // Creating a Express application
 const app = express();
@@ -25,7 +27,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // Setting the routes to the app as middlewares
 app.use(`${resourcePrefix}/tags`, tagRoutes); //sample
-
+app.use(`${resourcePrefix}/order`, orderRoute);
 
 // Setting static webpage
 app.use(express.static('./client'));
