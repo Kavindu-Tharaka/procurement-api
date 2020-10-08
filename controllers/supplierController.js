@@ -20,7 +20,7 @@ exports.createSupplier = async (req, res) => {
 
 exports.getAllSuppliers = async (req, res) => {
     try {
-        const query = Supplier.find(req.query);
+        const query = Supplier.find(req.query).populate('previousOrders');
 
         const suppliers = await query;
 
@@ -41,7 +41,9 @@ exports.getAllSuppliers = async (req, res) => {
 
 exports.getSupplier = async (req, res) => {
     try {
-        const supplier = await Supplier.findById(req.params.id);
+        const supplier = await Supplier.findById(req.params.id).populate(
+            'previousOrders'
+        );
 
         res.status(200).json({
             status: 'success',
@@ -59,10 +61,14 @@ exports.getSupplier = async (req, res) => {
 
 exports.updateSupplier = async (req, res) => {
     try {
-        const supplier = await Supplier.findByIdAndUpdate(req.params.id, req.body, {
-            new: true,
-            runValidators: true,
-        });
+        const supplier = await Supplier.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {
+                new: true,
+                runValidators: true,
+            }
+        );
 
         res.status(200).json({
             status: 'success',
@@ -93,4 +99,3 @@ exports.deleteSupplier = async (req, res) => {
         });
     }
 };
-
