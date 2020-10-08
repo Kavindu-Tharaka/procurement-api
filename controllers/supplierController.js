@@ -1,13 +1,13 @@
-const Tag = require('../models/SampleModel');
+const Supplier = require('../models/SupplierModel');
 
-exports.createTag = async (req, res) => {
+exports.createSupplier = async (req, res) => {
     try {
-        const newTag = await Tag.create(req.body);
+        const newSupplier = await Supplier.create(req.body);
 
         res.status(201).json({
             status: 'success',
             data: {
-                tag: newTag,
+                supplier: newSupplier,
             },
         });
     } catch (err) {
@@ -18,17 +18,17 @@ exports.createTag = async (req, res) => {
     }
 };
 
-exports.getAllTags = async (req, res) => {
+exports.getAllSuppliers = async (req, res) => {
     try {
-        const query = Tag.find(req.query);
+        const query = Supplier.find(req.query);
 
-        const tags = await query;
+        const suppliers = await query;
 
         res.status(200).json({
             status: 'success',
-            results: tags.length,
+            results: suppliers.length,
             data: {
-                tags,
+                suppliers,
             },
         });
     } catch (err) {
@@ -39,14 +39,14 @@ exports.getAllTags = async (req, res) => {
     }
 };
 
-exports.getTag = async (req, res) => {
+exports.getSupplier = async (req, res) => {
     try {
-        const tag = await Tag.findById(req.params.id);
+        const supplier = await Supplier.findById(req.params.id);
 
         res.status(200).json({
             status: 'success',
             data: {
-                tag,
+                supplier,
             },
         });
     } catch (err) {
@@ -57,9 +57,9 @@ exports.getTag = async (req, res) => {
     }
 };
 
-exports.updateTag = async (req, res) => {
+exports.updateSupplier = async (req, res) => {
     try {
-        const tag = await Tag.findByIdAndUpdate(req.params.id, req.body, {
+        const supplier = await Supplier.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
             runValidators: true,
         });
@@ -67,7 +67,7 @@ exports.updateTag = async (req, res) => {
         res.status(200).json({
             status: 'success',
             data: {
-                tag,
+                supplier,
             },
         });
     } catch (err) {
@@ -78,9 +78,9 @@ exports.updateTag = async (req, res) => {
     }
 };
 
-exports.deleteTag = async (req, res) => {
+exports.deleteSupplier = async (req, res) => {
     try {
-        await Tag.findByIdAndDelete(req.params.id);
+        await Supplier.findByIdAndDelete(req.params.id);
 
         res.status(204).json({
             status: 'success',
@@ -93,3 +93,4 @@ exports.deleteTag = async (req, res) => {
         });
     }
 };
+
