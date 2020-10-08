@@ -1,6 +1,12 @@
 const mongoose = require("mongoose");
 
 const OrderSchema = mongoose.Schema({
+  siteName: {
+    type: String,
+  },
+  siteAddress: {
+    type: String,
+  },
   orderItems: [
     {
       material: {
