@@ -20,7 +20,7 @@ exports.createSupplier = async (req, res) => {
 
 exports.getAllSuppliers = async (req, res) => {
     try {
-        const query = Supplier.find(req.query).populate('previousOrders');
+        const query = Supplier.find(req.query);
 
         const suppliers = await query;
 
@@ -41,9 +41,7 @@ exports.getAllSuppliers = async (req, res) => {
 
 exports.getSupplier = async (req, res) => {
     try {
-        const supplier = await Supplier.findById(req.params.id).populate(
-            'previousOrders'
-        );
+        const supplier = await Supplier.findById(req.params.id);
 
         res.status(200).json({
             status: 'success',
