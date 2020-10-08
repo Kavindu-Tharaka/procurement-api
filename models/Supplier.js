@@ -15,7 +15,7 @@ const SupplierSchema = mongoose.Schema({
             },
             previousOrders: [
                 {
-                    type: Schema.Types.ObjectId,
+                    type: mongoose.Schema.Types.ObjectId,
                     ref: Order,
                     trim: true,
                 },
