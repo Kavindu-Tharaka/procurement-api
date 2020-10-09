@@ -31,21 +31,21 @@ const OrderSchema = new Schema({
             remark: {
                 type: String,
             },
-            status: {
-                type: String,
-                trim: true,
-            },
-            deliverDate: {
-                type: Date,
-                required: [true, 'Deliver Date is Mandatory!'],
-            },
-            createdDate: {
-                type: Date,
-                default: Date.now,
-            },
         },
     ],
+    status: {
+        type: String,
+        trim: true,
+    },
+    deliverDate: {
+        type: Date,
+        required: [true, 'Deliver Date is Mandatory!'],
+    },
+    requestedDate: {
+        type: Date,
+        default: Date.now,
+    },
 });
 
-const Order = mongoose.model("order", OrderSchema);
+const Order = mongoose.model('order', OrderSchema);
 module.exports = Order;
