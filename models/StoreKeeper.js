@@ -14,13 +14,14 @@ const StoreKeeperSchema = new Schema({
         required: [true, 'Date is Mandatory!'],
     },
     materials: [{
-        type: Date,
+        type: String,
         default: Date.now,
         required: [true, 'Items are Mandatory!'],
     }],
     qty: {
         type: Number,
         default: Date.now,
+        required: [true, 'Quntity is Mandatory!'],
     },
 });
 
