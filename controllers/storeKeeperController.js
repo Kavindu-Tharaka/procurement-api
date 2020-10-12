@@ -20,7 +20,7 @@ exports.createMaterial = async (req, res) => {
 
 exports.getAllMaterials = async (req, res) => {
     try {
-        const query = Material.find(req.query); //.populate("supplier");
+        const query = Material.find(req.query); 
 
         const materials = await query;
 
