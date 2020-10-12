@@ -11,7 +11,6 @@ const OrderSchema = new Schema({
     siteAddress: {
         type: String,
         required: [true, 'Site Address is Mandatory!'],
-
     },
     supplier: {
         type: Schema.Types.ObjectId,
