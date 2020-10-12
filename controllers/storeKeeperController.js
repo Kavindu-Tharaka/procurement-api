@@ -1,6 +1,6 @@
 const Material = require('../models/StoreKeeper');
 
-exports.createOrder = async (req, res) => {
+exports.createMaterial = async (req, res) => {
     try {
         const newMaterial = await Material.create(req.body);
 
