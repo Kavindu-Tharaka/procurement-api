@@ -6,9 +6,11 @@ const Schema = mongoose.Schema;
 const OrderSchema = new Schema({
     siteName: {
         type: String,
+        required: [true, 'Site Name is Mandatory!'],
     },
     siteAddress: {
         type: String,
+        required: [true, 'Site Address is Mandatory!'],
     },
     supplier: {
         type: Schema.Types.ObjectId,
@@ -36,6 +38,7 @@ const OrderSchema = new Schema({
     status: {
         type: String,
         trim: true,
+        default: 'Pending',
     },
     deliverDate: {
         type: Date,
