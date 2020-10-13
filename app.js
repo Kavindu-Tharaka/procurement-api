@@ -9,6 +9,7 @@ const resourcePrefix = '/api/v1';
 // Importing routes from the routes folder
 const orderRoute = require('./routes/orderRoute');
 const supplierRoute = require('./routes/supplierRoute');
+const storeKeeperRoute = require('./routes/storeKeeperRoutes');
 
 
 // Creating a Express application
@@ -28,6 +29,7 @@ if (process.env.NODE_ENV === 'development') {
 // Setting the routes to the app as middlewares
 app.use(`${resourcePrefix}/order`, orderRoute);
 app.use(`${resourcePrefix}/supplier`, supplierRoute);
+app.use(`${resourcePrefix}/store`, storeKeeperRoute);
 
 // Setting static webpage
 app.use(express.static('./client'));
