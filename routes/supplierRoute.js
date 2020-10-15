@@ -13,4 +13,9 @@ router
     .patch(supplierController.updateSupplier)
     .delete(supplierController.deleteSupplier);
 
+router
+    .route('/email')
+    .post(supplierController.sendEmail);
+
+
 module.exports = router;
