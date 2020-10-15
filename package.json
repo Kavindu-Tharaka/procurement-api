@@ -1,7 +1,7 @@
 {
-  "name": "time-table-manager-api",
+  "name": "procurement-api",
   "version": "1.0.0",
-  "description": "SPM Timetable Manager",
+  "description": "Procurement System",
   "main": "app.js",
   "scripts": {
     "start": "node server.js",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ThamalDilanka/time-table-manager-api.git"
+    "url": "git+https://github.com/Kavindu-Tharaka/procurement-api.git"
   },
   "author": "TeamAlpha",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ThamalDilanka/time-table-manager-api/issues"
+    "url": "https://github.com/Kavindu-Tharaka/procurement-api/issues"
   },
-  "homepage": "https://github.com/ThamalDilanka/time-table-manager-api#readme",
+  "homepage": "https://github.com/Kavindu-Tharaka/procurement-api#readme",
   "devDependencies": {
     "nodemon": "^2.0.4"
   },

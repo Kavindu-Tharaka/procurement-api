@@ -1,13 +1,13 @@
-const Order = require('../models/OrderModel');
+const Supplier = require('../models/Supplier');
 
-exports.createOrder = async (req, res) => {
+exports.createSupplier = async (req, res) => {
     try {
-        const newOrder = await Order.create(req.body);
+        const newSupplier = await Supplier.create(req.body);
 
         res.status(201).json({
             status: 'success',
             data: {
-                order: newOrder,
+                supplier: newSupplier,
             },
         });
     } catch (err) {
@@ -18,17 +18,17 @@ exports.createOrder = async (req, res) => {
     }
 };
 
-exports.getAllOrders = async (req, res) => {
+exports.getAllSuppliers = async (req, res) => {
     try {
-        const query = Order.find(req.query).populate("supplier");
+        const query = Supplier.find(req.query);
 
-        const orders = await query;
+        const suppliers = await query;
 
         res.status(200).json({
             status: 'success',
-            results: orders.length,
+            results: suppliers.length,
             data: {
-                orders,
+                suppliers,
             },
         });
     } catch (err) {
@@ -39,35 +39,14 @@ exports.getAllOrders = async (req, res) => {
     }
 };
 
-exports.getOrder = async (req, res) => {
+exports.getSupplier = async (req, res) => {
     try {
-        const order = await Order.findById(req.params.id);
-
-        res.status(200).json({
-            status: 'success',
-            data: {
-                order,
-            },
-        });
-    } catch (err) {
-        res.status(400).json({
-            status: 'failed',
-            message: err.message,
-        });
-    }
-};
-
-exports.updateOrder = async (req, res) => {
-    try {
-        const order = await Order.findByIdAndUpdate(req.params.id, req.body, {
-            new: true,
-            runValidators: true,
-        });
+        const supplier = await Supplier.findById(req.params.id);
 
         res.status(200).json({
             status: 'success',
             data: {
-                order,
+                supplier,
             },
         });
     } catch (err) {
@@ -78,9 +57,34 @@ exports.updateOrder = async (req, res) => {
     }
 };
 
-exports.deleteOrder = async (req, res) => {
+exports.updateSupplier = async (req, res) => {
     try {
-        await Order.findByIdAndDelete(req.params.id);
+        const supplier = await Supplier.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {
+                new: true,
+                runValidators: true,
+            }
+        );
+
+        res.status(200).json({
+            status: 'success',
+            data: {
+                supplier,
+            },
+        });
+    } catch (err) {
+        res.status(400).json({
+            status: 'failed',
+            message: err.message,
+        });
+    }
+};
+
+exports.deleteSupplier = async (req, res) => {
+    try {
+        await Supplier.findByIdAndDelete(req.params.id);
 
         res.status(204).json({
             status: 'success',
@@ -93,4 +97,3 @@ exports.deleteOrder = async (req, res) => {
         });
     }
 };
-

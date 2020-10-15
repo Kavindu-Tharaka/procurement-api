@@ -1,13 +1,13 @@
-const Tag = require('../models/SampleModel');
+const Material = require('../models/StoreKeeper');
 
-exports.createTag = async (req, res) => {
+exports.createMaterial = async (req, res) => {
     try {
-        const newTag = await Tag.create(req.body);
+        const newMaterial = await Material.create(req.body);
 
         res.status(201).json({
             status: 'success',
             data: {
-                tag: newTag,
+                order: newMaterial,
             },
         });
     } catch (err) {
@@ -18,17 +18,17 @@ exports.createTag = async (req, res) => {
     }
 };
 
-exports.getAllTags = async (req, res) => {
+exports.getAllMaterials = async (req, res) => {
     try {
-        const query = Tag.find(req.query);
+        const query = Material.find(req.query); 
 
-        const tags = await query;
+        const materials = await query;
 
         res.status(200).json({
             status: 'success',
-            results: tags.length,
+            results: materials.length,
             data: {
-                tags,
+                materials,
             },
         });
     } catch (err) {
@@ -39,14 +39,14 @@ exports.getAllTags = async (req, res) => {
     }
 };
 
-exports.getTag = async (req, res) => {
+exports.getMaterial = async (req, res) => {
     try {
-        const tag = await Tag.findById(req.params.id);
+        const material = await Material.findById(req.params.id);
 
         res.status(200).json({
             status: 'success',
             data: {
-                tag,
+                material,
             },
         });
     } catch (err) {
@@ -57,9 +57,9 @@ exports.getTag = async (req, res) => {
     }
 };
 
-exports.updateTag = async (req, res) => {
+exports.updateMaterial  = async (req, res) => {
     try {
-        const tag = await Tag.findByIdAndUpdate(req.params.id, req.body, {
+        const material = await Material.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
             runValidators: true,
         });
@@ -67,7 +67,7 @@ exports.updateTag = async (req, res) => {
         res.status(200).json({
             status: 'success',
             data: {
-                tag,
+                material,
             },
         });
     } catch (err) {
@@ -78,9 +78,9 @@ exports.updateTag = async (req, res) => {
     }
 };
 
-exports.deleteTag = async (req, res) => {
+exports.deleteMaterial = async (req, res) => {
     try {
-        await Tag.findByIdAndDelete(req.params.id);
+        await Material.findByIdAndDelete(req.params.id);
 
         res.status(204).json({
             status: 'success',
@@ -93,3 +93,4 @@ exports.deleteTag = async (req, res) => {
         });
     }
 };
+

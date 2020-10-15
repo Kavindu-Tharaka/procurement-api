@@ -1,26 +1,54 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+const Supplier = require('./Supplier');
 
-const OrderSchema = mongoose.Schema({
-  orderItems: [
-    {
-      material: {
+const Schema = mongoose.Schema;
+
+const OrderSchema = new Schema({
+    siteName: {
         type: String,
-      },
-      quantity: {
-        type: Number,
-      },
-      remark: {
+        required: [true, 'Site Name is Mandatory!'],
+    },
+    siteAddress: {
         type: String,
-      },
-      date: {
+        required: [true, 'Site Address is Mandatory!'],
+    },
+    supplier: {
+        type: Schema.Types.ObjectId,
+        ref: Supplier,
+    },
+    orderItems: [
+        {
+            material: {
+                type: String,
+                required: [true, 'Material is Mandatory!'],
+            },
+            unit: {
+                type: String,
+                required: [true, 'Unit is Mandatory!'],
+            },
+            quantity: {
+                type: Number,
+                required: [true, 'Quantity is Mandatory!'],
+            },
+            remark: {
+                type: String,
+            },
+        },
+    ],
+    status: {
+        type: String,
+        trim: true,
+        default: 'Pending',
+    },
+    deliverDate: {
+        type: Date,
+        required: [true, 'Deliver Date is Mandatory!'],
+    },
+    requestedDate: {
         type: Date,
         default: Date.now,
-      },
-      status: {
-        type: Number,
-      },
     },
-  ],
 });
 
-module.exports = mongoose.model("order", OrderSchema);
+const Order = mongoose.model('order', OrderSchema);
+module.exports = Order;
