@@ -13,6 +13,13 @@ const SupplierSchema = new Schema({
         trim: true,
         required: [true, 'Address is Mandatory!'],
     },
+    contact: {
+        type: String,
+        minlength: 10,
+        maxlength: 10,
+        trim: true,
+        required: [true, 'Phone Number(Contact) is Mandatory!'],
+    },
     email: {
         type: String,
         trim: true,
