@@ -1,5 +1,6 @@
 const Supplier = require('../models/Supplier');
 const nodemailer = require('nodemailer');
+const axios = require('axios');
 
 exports.createSupplier = async (req, res) => {
     try {
@@ -100,6 +101,17 @@ exports.deleteSupplier = async (req, res) => {
 };
 
 exports.sendEmail = async (req, res) => {
+    let recipient = '';
+
+    await axios
+        .get(`http://localhost:8000/api/v1/supplier/${req.body.recipientID}`)
+        .then(function (response) {
+            recipient = response.data.data.supplier.email;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
     try {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -110,57 +122,42 @@ exports.sendEmail = async (req, res) => {
         });
 
         const htmlBody = `
-            <h3 style="color:grey;">Site : ${req.body.site}</h3>
-            <h3 style="color:grey;">Inquiries : ${req.body.siteContact}</h3>
-            <h3 style="color:crimson;">Need to be delivered before: ${req.body.deliverDate}</h3>
-            
-            <table style="border: 1px solid black; border-collapse: collapse;  padding: 10px;">
-                                <thead>
+        
+        <h3 style="color:grey;">Site : ${req.body.site}</h3>
+        <h3 style="color:grey;">Inquiries : ${req.body.siteContact}</h3>
+        <h3 style="color:crimson;">Need to be delivered before: ${req.body.deliverDate}</h3>
+
+        <table style="padding: 10px;">
+                                <thead className="thead-dark">
                                     <tr>
-                                        <th style="border: 1px solid black; border-collapse: collapse; text-align: left; padding: 10px;" scope="col">Material</th>
-                                        <th  style="border: 1px solid black; border-collapse: collapse;text-align: left;  padding: 10px;" scope="col">Unit</th>
-                                        <th  style="border: 1px solid black; border-collapse: collapse;text-align: left;  padding: 10px;" scope="col">Quantity</th>
+                                        <th scope="col"></th>
+                                        <th scope="col">Material</th>
+                                        <th scope="col">Unit</th>
+                                        <th scope="col">Quantity</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td style="border: 1px solid black; border-collapse: collapse;  padding: 10px;">Bricks</td>
-                                        <td  style="border: 1px solid black; border-collapse: collapse;  padding: 10px;">Count</td>
-                                        <td  style="border: 1px solid black; border-collapse: collapse;  padding: 10px;">90</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td  style="border: 1px solid black; border-collapse: collapse;  padding: 10px;">Sand</td>
-                                        <td  style="border: 1px solid black; border-collapse: collapse;  padding: 10px;">Cubic Meters</td>
-                                        <td  style="border: 1px solid black; border-collapse: collapse;  padding: 10px;">3</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td  style="border: 1px solid black; border-collapse: collapse;  padding: 10px;">Cement</td>
-                                        <td  style="border: 1px solid black; border-collapse: collapse;  padding: 10px;">Count</td>
-                                        <td  style="border: 1px solid black; border-collapse: collapse;  padding: 10px;">35</td>
-
-                                    </tr>
+                                    ${req.body.orderItems.map((item, index) => {
+                                        return (
+                                            `<tr>
+                                                <th style="text-align: left; padding: 10px;" scope="col">${index + 1}</th>
+                                                <td style="padding: 15px;">${item.material}</td>
+                                                <td style="padding: 15px;">${item.unit}</td>
+                                                <td style="padding: 15px;">${item.quantity}</td>
+                                            </tr>`
+                                        )
+                                    })}
                                 </tbody>
                             </table>
 
-                
-
-        `;
+        `
 
         const mailOptions = {
             from: '"Alpha Procurement Company" <kavindutharaka999@gmail.com>', // sender address
-            to: req.body.recipient, // list of receivers
+            to: recipient, // list of receivers
             subject: 'Order From Alpha Procurement Company', // Subject line
             html: htmlBody, // email body
         };
-
-        // const mailOptions = {
-        //     from: '"Alpha Procurement Company" <kavindutharaka999@gmail.com>', // sender address
-        //     to: 'kavindu.ktm@gmail.com', // list of receivers
-        //     subject: 'This is the Subject', // Subject line
-        //     html: '<b>This is the HTML boday</b>', // email body
-        // };
 
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
