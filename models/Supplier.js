@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Order = require('./OrderModel');
 
 const Schema = mongoose.Schema;
 
@@ -11,7 +10,18 @@ const SupplierSchema = new Schema({
     },
     address: {
         type: String,
+        trim: true,
         required: [true, 'Address is Mandatory!'],
+    },
+    email: {
+        type: String,
+        trim: true,
+        required: [true, 'Email is Mandatory!'],
+    },
+    icon: {
+        type: String,
+        trim: true,
+        required: [true, 'Icon is Mandatory!'],
     },
     addedDate: {
         type: Date,

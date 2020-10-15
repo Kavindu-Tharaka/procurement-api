@@ -12,6 +12,10 @@ const OrderSchema = new Schema({
         type: String,
         required: [true, 'Site Address is Mandatory!'],
     },
+    siteContact: {
+        type: String,
+        default: '0112345321'
+    },
     supplier: {
         type: Schema.Types.ObjectId,
         ref: Supplier,
