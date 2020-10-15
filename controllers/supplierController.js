@@ -121,42 +121,6 @@ exports.sendEmail = async (req, res) => {
             },
         });
 
-        // const htmlBody = `
-        //     <h3 style="color:grey;">Site : ${req.body.site}</h3>
-        //     <h3 style="color:grey;">Inquiries : ${req.body.siteContact}</h3>
-        //     <h3 style="color:crimson;">Need to be delivered before: ${req.body.deliverDate}</h3>
-            
-        //     <table style="padding: 10px;">
-        //                         <thead>
-        //                             <tr>
-        //                                 <th style="ext-align: left; padding: 10px;" scope="col">Material</th>
-        //                                 <th  style="border: 1px solid black; border-collapse: collapse;text-align: left;  padding: 10px;" scope="col">Unit</th>
-        //                                 <th  style="border: 1px solid black; border-collapse: collapse;text-align: left;  padding: 10px;" scope="col">Quantity</th>
-        //                             </tr>
-        //                         </thead>
-        //                         <tbody>
-        //                             <tr>
-        //                                 <td style="padding: 10px;">Bricks</td>
-        //                                 <td  style="padding: 10px;">Count</td>
-        //                                 <td  style="padding: 10px;">90</td>
-
-        //                             </tr>
-        //                             <tr>
-        //                                 <td  style="padding: 10px;">Sand</td>
-        //                                 <td  style="padding: 10px;">Cubic Meters</td>
-        //                                 <td  style="padding: 10px;">3</td>
-
-        //                             </tr>
-        //                             <tr>
-        //                                 <td  style="padding: 10px;">Cement</td>
-        //                                 <td  style="padding: 10px;">Count</td>
-        //                                 <td  style="padding: 10px;">35</td>
-
-        //                             </tr>
-        //                         </tbody>
-        //                     </table>
-        // `;
-
         const htmlBody = `
         
         <h3 style="color:grey;">Site : ${req.body.site}</h3>
