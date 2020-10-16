@@ -58,7 +58,6 @@ exports.getMaterial = async (req, res) => {
 };
 
 exports.updateMaterial = async (req, res) => {
-    console.log("update body: ",req.body);
     // let obj = {
     //     materialInputFields: [ { material: 'test', quantity: '45', used: 05, total: 0 } ],
     //     refNo: 'Te23',
