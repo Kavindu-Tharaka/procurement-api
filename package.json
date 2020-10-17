@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "nodemon": "nodemon server.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   },
   "homepage": "https://github.com/Kavindu-Tharaka/procurement-api#readme",
   "devDependencies": {
+    "jest": "^26.5.3",
     "nodemon": "^2.0.4"
   },
   "dependencies": {
