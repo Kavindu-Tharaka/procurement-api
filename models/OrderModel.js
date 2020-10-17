@@ -44,6 +44,10 @@ const OrderSchema = new Schema({
         trim: true,
         default: 'Pending',
     },
+    comment: {
+        type: String,
+        trim: true,
+    },
     deliverDate: {
         type: Date,
         required: [true, 'Deliver Date is Mandatory!'],
