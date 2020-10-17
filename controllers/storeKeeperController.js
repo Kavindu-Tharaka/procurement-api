@@ -20,7 +20,7 @@ exports.createMaterial = async (req, res) => {
 
 exports.getAllMaterials = async (req, res) => {
     try {
-        const query = Material.find(req.query); 
+        const query = Material.find(req.query);
 
         const materials = await query;
 
@@ -57,13 +57,23 @@ exports.getMaterial = async (req, res) => {
     }
 };
 
-exports.updateMaterial  = async (req, res) => {
+exports.updateMaterial = async (req, res) => {
+    // let obj = {
+    //     materialInputFields: [ { material: 'test', quantity: '45', used: 05, total: 0 } ],
+    //     refNo: 'Te23',
+    //     date: '2020-10-31'
+
+    //   }
+    // let obj ={
+    //     "$set":{ "materialInputFields": req.body.arr[0]}
+    // }
+
     try {
         const material = await Material.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
             runValidators: true,
         });
-
+        // console.log("materials: ",material);
         res.status(200).json({
             status: 'success',
             data: {
