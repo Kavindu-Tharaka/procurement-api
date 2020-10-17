@@ -1,7 +1,12 @@
-const Supplier = require('../models/Supplier');
+//import libraries
 const nodemailer = require('nodemailer');
 const axios = require('axios');
 
+//import other related model files
+const Supplier = require('../models/Supplier');
+
+
+//map with create one supplier POST request
 exports.createSupplier = async (req, res) => {
     try {
         const newSupplier = await Supplier.create(req.body);
@@ -20,6 +25,7 @@ exports.createSupplier = async (req, res) => {
     }
 };
 
+//map with get all suppliers GET request
 exports.getAllSuppliers = async (req, res) => {
     try {
         const query = Supplier.find(req.query);
@@ -41,6 +47,7 @@ exports.getAllSuppliers = async (req, res) => {
     }
 };
 
+//map with get one supplier GET request
 exports.getSupplier = async (req, res) => {
     try {
         const supplier = await Supplier.findById(req.params.id);
@@ -59,6 +66,7 @@ exports.getSupplier = async (req, res) => {
     }
 };
 
+//map with update one supplier PATCH request
 exports.updateSupplier = async (req, res) => {
     try {
         const supplier = await Supplier.findByIdAndUpdate(
@@ -101,60 +109,55 @@ exports.deleteSupplier = async (req, res) => {
 };
 
 exports.sendEmail = async (req, res) => {
-    let recipient = '';
+    let recipientEmail = '';
 
     await axios
-        .get(`http://localhost:8000/api/v1/supplier/${req.body.recipientID}`)
-        .then(function (response) {
-            recipient = response.data.data.supplier.email;
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+            .get(`https://procurement-system.herokuapp.com/api/v1/supplier/${req.body.recipientID}`)
+            .then(function (response) {
+                recipientEmail = response.data.data.supplier.email;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
 
-    try {
+    try{   
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'kavindutharaka999@gmail.com', // username
-                pass: 'FaBook2013I$', // password
+                user: 'kavindutharaka999@gmail.com', // username of sender
+                pass: 'FaBook2013I$', // password of sender
             },
         });
 
-        const htmlBody = `
-        
-        <h3 style="color:grey;">Site : ${req.body.site}</h3>
+        const htmlBody = 
+        `<h3 style="color:grey;">Site : ${req.body.site}</h3>
         <h3 style="color:grey;">Inquiries : ${req.body.siteContact}</h3>
-        <h3 style="color:crimson;">Need to be delivered before: ${req.body.deliverDate}</h3>
+        <h3 style="color:crimson;">Need to be delivered before: ${req.body.deliverDate} </h3>
 
         <table style="padding: 10px;">
-                                <thead className="thead-dark">
-                                    <tr>
-                                        <th scope="col"></th>
-                                        <th scope="col">Material</th>
-                                        <th scope="col">Unit</th>
-                                        <th scope="col">Quantity</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    ${req.body.orderItems.map((item, index) => {
-                                        return (
-                                            `<tr>
-                                                <th style="text-align: left; padding: 10px;" scope="col">${index + 1}</th>
-                                                <td style="padding: 15px;">${item.material}</td>
-                                                <td style="padding: 15px;">${item.unit}</td>
-                                                <td style="padding: 15px;">${item.quantity}</td>
-                                            </tr>`
-                                        )
-                                    })}
-                                </tbody>
-                            </table>
-
-        `
+            <thead className="thead-dark">
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Material</th>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+            ${req.body.orderItems.map((item, index) => {
+            return `<tr>
+                        <th style="text-align: left; padding: 10px;" scope="col">${index + 1}</th>
+                        <td style="padding: 15px;">${item.material}</td>
+                        <td style="padding: 15px;">${item.unit}</td>
+                        <td style="padding: 15px;">${item.quantity}</td>
+                    </tr>`;
+            })}
+            </tbody>
+        </table>`;
 
         const mailOptions = {
             from: '"Alpha Procurement Company" <kavindutharaka999@gmail.com>', // sender address
-            to: recipient, // list of receivers
+            to: recipientEmail, // list of receivers email addresses
             subject: 'Order From Alpha Procurement Company', // Subject line
             html: htmlBody, // email body
         };
@@ -171,7 +174,8 @@ exports.sendEmail = async (req, res) => {
             status: 'success',
             message: 'Email was sent to the supplier',
         });
-    } catch (err) {
+    } 
+    catch(err){
         res.status(400).json({
             status: 'failed',
             message: err.message,

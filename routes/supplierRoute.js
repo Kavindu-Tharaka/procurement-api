@@ -1,5 +1,10 @@
+//import express framework
 const express = require('express');
+
+//import other related model files
 const supplierController = require('../controllers/supplierController');
+
+
 const router = express.Router();
 
 router
@@ -17,5 +22,5 @@ router
     .route('/email')
     .post(supplierController.sendEmail);
 
-
+    
 module.exports = router;
