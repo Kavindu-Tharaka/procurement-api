@@ -1,4 +1,6 @@
 const Supplier = require('../models/Supplier');
+const nodemailer = require('nodemailer');
+const axios = require('axios');
 
 exports.createSupplier = async (req, res) => {
     try {
@@ -89,6 +91,85 @@ exports.deleteSupplier = async (req, res) => {
         res.status(204).json({
             status: 'success',
             data: null,
+        });
+    } catch (err) {
+        res.status(400).json({
+            status: 'failed',
+            message: err.message,
+        });
+    }
+};
+
+exports.sendEmail = async (req, res) => {
+    let recipient = '';
+
+    await axios
+        .get(`http://localhost:8000/api/v1/supplier/${req.body.recipientID}`)
+        .then(function (response) {
+            recipient = response.data.data.supplier.email;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+    try {
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'kavindutharaka999@gmail.com', // username
+                pass: 'FaBook2013I$', // password
+            },
+        });
+
+        const htmlBody = `
+        
+        <h3 style="color:grey;">Site : ${req.body.site}</h3>
+        <h3 style="color:grey;">Inquiries : ${req.body.siteContact}</h3>
+        <h3 style="color:crimson;">Need to be delivered before: ${req.body.deliverDate}</h3>
+
+        <table style="padding: 10px;">
+                                <thead className="thead-dark">
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Material</th>
+                                        <th scope="col">Unit</th>
+                                        <th scope="col">Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${req.body.orderItems.map((item, index) => {
+                                        return (
+                                            `<tr>
+                                                <th style="text-align: left; padding: 10px;" scope="col">${index + 1}</th>
+                                                <td style="padding: 15px;">${item.material}</td>
+                                                <td style="padding: 15px;">${item.unit}</td>
+                                                <td style="padding: 15px;">${item.quantity}</td>
+                                            </tr>`
+                                        )
+                                    })}
+                                </tbody>
+                            </table>
+
+        `
+
+        const mailOptions = {
+            from: '"Alpha Procurement Company" <kavindutharaka999@gmail.com>', // sender address
+            to: recipient, // list of receivers
+            subject: 'Order From Alpha Procurement Company', // Subject line
+            html: htmlBody, // email body
+        };
+
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
+
+        res.status(200).json({
+            status: 'success',
+            message: 'Email was sent to the supplier',
         });
     } catch (err) {
         res.status(400).json({

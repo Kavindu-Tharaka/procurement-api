@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
 
 const StoreKeeperSchema = new Schema({
@@ -9,20 +8,16 @@ const StoreKeeperSchema = new Schema({
         required: [true, 'Ref No is Mandatory!'],
     },
     date: {
-        type: Date,
+        type: String,
         default: Date.now,
         required: [true, 'Date is Mandatory!'],
     },
-    materials: [{
-        type: String,
-        default: Date.now,
-        required: [true, 'Items are Mandatory!'],
-    }],
-    qty: {
-        type: Number,
-        default: Date.now,
-        required: [true, 'Quntity is Mandatory!'],
-    },
+    materialInputFields: [{
+        type:Object,
+        // trim: true,
+        required: [true, 'Material Items are Mandatory!'],
+    }]
+    
 });
 
-module.exports = mongoose.model('storeKeeper', StoreKeeperSchema);
+module.exports = mongoose.model('store', StoreKeeperSchema);
