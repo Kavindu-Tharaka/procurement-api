@@ -6,7 +6,12 @@ const axios = require('axios');
 const Supplier = require('../models/Supplier');
 
 
-//map with create one supplier POST request
+/**
+ * this method is map with create one supplier POST request
+ * @param {HTTP request} req 
+ * @param {HTTP response} res 
+ * sends response with inserted Supplier document
+ */
 exports.createSupplier = async (req, res) => {
     try {
         const newSupplier = await Supplier.create(req.body);
@@ -25,7 +30,12 @@ exports.createSupplier = async (req, res) => {
     }
 };
 
-//map with get all suppliers GET request
+/**
+ * this method is map with get all suppliers GET request
+ * @param {HTTP request} req 
+ * @param {HTTP response} res 
+ * sends response with fetched Supplier documents
+ */
 exports.getAllSuppliers = async (req, res) => {
     try {
         const query = Supplier.find(req.query);
@@ -47,7 +57,12 @@ exports.getAllSuppliers = async (req, res) => {
     }
 };
 
-//map with get one supplier GET request
+/**
+ * this method is map with get one supplier GET request
+ * @param {HTTP request} req 
+ * @param {HTTP response} res 
+ * sends response with fetched Supplier document
+ */
 exports.getSupplier = async (req, res) => {
     try {
         const supplier = await Supplier.findById(req.params.id);
@@ -66,7 +81,12 @@ exports.getSupplier = async (req, res) => {
     }
 };
 
-//map with update one supplier PATCH request
+/**
+ * this method is map with update one supplier PATCH request
+ * @param {HTTP request} req 
+ * @param {HTTP response} res 
+ * sends response with updated Supplier document
+ */
 exports.updateSupplier = async (req, res) => {
     try {
         const supplier = await Supplier.findByIdAndUpdate(
@@ -92,6 +112,12 @@ exports.updateSupplier = async (req, res) => {
     }
 };
 
+/**
+ * this method is map with delete one supplier DELETE request
+ * @param {HTTP request} req 
+ * @param {HTTP response} res 
+ * sends response as success or failed
+ */
 exports.deleteSupplier = async (req, res) => {
     try {
         await Supplier.findByIdAndDelete(req.params.id);
@@ -108,6 +134,12 @@ exports.deleteSupplier = async (req, res) => {
     }
 };
 
+/**
+ * this method is map with send email to supplier POST request
+ * @param {HTTP request} req 
+ * @param {HTTP response} res 
+ * sends response as success or failed
+ */
 exports.sendEmail = async (req, res) => {
     let recipientEmail = '';
 
