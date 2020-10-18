@@ -1,5 +1,11 @@
 const Order = require('../models/OrderModel');
 
+/**
+ * Implemented for insert order document in to the database
+ * @param {HTTP request} req 
+ * @param {HTTP response} res 
+ * sends response with inserted Order document
+ */
 exports.createOrder = async (req, res) => {
     try {
         const newOrder = await Order.create(req.body);
@@ -18,6 +24,12 @@ exports.createOrder = async (req, res) => {
     }
 };
 
+/**
+ * Implemented for get all the order document in the database
+ * @param {HTTP request} req 
+ * @param {HTTP response} res 
+ * sends response with all the Order documents in the database
+ */
 exports.getAllOrders = async (req, res) => {
     try {
         const query = Order.find(req.query).populate("supplier");
@@ -39,6 +51,12 @@ exports.getAllOrders = async (req, res) => {
     }
 };
 
+/**
+ * Implemented for get specific order document in the database
+ * @param {HTTP request} req 
+ * @param {HTTP response} res 
+ * sends response with single Order documents in the database
+ */
 exports.getOrder = async (req, res) => {
     try {
         const order = await Order.findById(req.params.id);
@@ -57,6 +75,12 @@ exports.getOrder = async (req, res) => {
     }
 };
 
+/**
+ * Implemented for update a Order document in the database
+ * @param {HTTP request} req 
+ * @param {HTTP response} res 
+ * sends response with updated Order document
+ */
 exports.updateOrder = async (req, res) => {
     try {
         const order = await Order.findByIdAndUpdate(req.params.id, req.body, {
@@ -78,6 +102,12 @@ exports.updateOrder = async (req, res) => {
     }
 };
 
+/**
+ * Implemented for delete a specific order document in the database
+ * @param {HTTP request} req 
+ * @param {HTTP response} res 
+ * sends success if the deletion is success
+ */
 exports.deleteOrder = async (req, res) => {
     try {
         await Order.findByIdAndDelete(req.params.id);
